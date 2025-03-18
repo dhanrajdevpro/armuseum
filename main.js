@@ -31,6 +31,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.appendChild(arButtonsContainer);
 
+    // Create end AR button
+    const endArButton = document.createElement("button");
+    endArButton.textContent = "End AR";
+    endArButton.className = "ar-view-btn";
+    endArButton.style.position = "absolute";
+    endArButton.style.bottom = "10px";
+    endArButton.style.left = "50%";
+    endArButton.style.transform = "translateX(-50%)";
+    document.body.appendChild(endArButton);
+
     const mindarThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
       imageTargetSrc: `./mind-files/${dinosaurType}.mind`,
@@ -43,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const model = await loadGLTF(
       `./Dinosaurs-3d-models/${dinosaurType}/scene.gltf`
     );
+
     model.scene.scale.set(0.1, 0.1, 0.1);
     model.scene.position.set(0, -0.4, 0);
     scene.add(model.scene);
@@ -51,14 +62,23 @@ document.addEventListener("DOMContentLoaded", () => {
     renderer.setAnimationLoop(() => {
       renderer.render(scene, camera);
     });
+
+    // End AR functionality
+    endArButton.onclick = async () => {
+      // await mindarThree.stop();
+      // mindarThree.renderer.domElement.remove();
+      // document.querySelector(".container").style.display = "block"; // Show all other contents
+      // arButtonsContainer.remove();
+      // endArButton.remove();
+    };
   };
 
   document.getElementById("launch-ankylosaurus-btn").onclick = () =>
     start("Ankylosaurus");
   document.getElementById("launch-brachiosaurus-btn").onclick = () =>
     start("Brachiosaurus");
-  document.getElementById("launch-tyrannosaurus-btn").onclick = () =>
-    start("Tyrannosaurus");
+  document.getElementById("launch-tyrannosaurus-rex-btn").onclick = () =>
+    start("Tyrannosaurus-Rex");
   document.getElementById("launch-triceratops-btn").onclick = () =>
     start("Triceratops");
   document.getElementById("launch-stegosaurus-btn").onclick = () =>
@@ -71,6 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
     start("Gallimimus");
   document.getElementById("launch-pachycephalosaurus-btn").onclick = () =>
     start("pachycephalosaurus");
-  document.getElementById("launch-Pteranodon-btn").onclick = () =>
+  document.getElementById("launch-pteranodon-btn").onclick = () =>
     start("Pteranodon");
 });
