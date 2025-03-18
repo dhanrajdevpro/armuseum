@@ -43,8 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const mindarThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
-      imageTargetSrc: `./mind-files/${dinosaurType}.mind`,
+      imageTargetSrc: "./trex-draw.mind",
+      // imageTargetSrc: `./mind-files/${dinosaurType}.mind`,
+      maxTrack: 5, // Track multiple targets
+      filterMinCF: 0.001, // Lower confidence threshold
     });
+
     const { renderer, scene, camera } = mindarThree;
 
     const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
@@ -54,9 +58,21 @@ document.addEventListener("DOMContentLoaded", () => {
       `./Dinosaurs-3d-models/${dinosaurType}/scene.gltf`
     );
 
+    console.log(mindarThree, "mindarThree");
+    console.log(model, "model");
+
     model.scene.scale.set(0.1, 0.1, 0.1);
     model.scene.position.set(0, -0.4, 0);
-    scene.add(model.scene);
+
+    const anchor = mindarThree.addAnchor(0);
+    anchor.group.add(model.scene);
+
+    anchor.onTargetFound = () => {
+      console.log("on target found");
+    };
+    anchor.onTargetLost = () => {
+      console.log("on target lost");
+    };
 
     await mindarThree.start();
     renderer.setAnimationLoop(() => {
