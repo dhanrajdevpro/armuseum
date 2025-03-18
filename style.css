@@ -1,0 +1,6 @@
+#my-ar-container {
+  height: 600px;
+  width: 600px;
+  position: relative;
+  overflow: hidden;
+}

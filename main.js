@@ -1,48 +1,37 @@
-import * as THREE from "three";
-import { MindARThree } from "mindar-image-three";
-import { mockWithVideo } from "./libs/camera-mock.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { loadGLTF } from "../../libs/loader.js";
+const THREE = window.MINDAR.IMAGE.THREE;
 
-const loadGLTF = (path) => {
-  return new Promise((resolve, reject) => {
-    const loader = new GLTFLoader();
-    loader.load(path, (gltf) => {
-      resolve(gltf);
-    });
-  });
-};
 document.addEventListener("DOMContentLoaded", () => {
   const start = async () => {
-    mockWithVideo("./mock-camera-video.mp4");
-
-    // initialize MindAR
-    const mindarThree = new MindARThree({
+    const mindarThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.querySelector("#my-ar-container"),
-      imageTargetSrc: "./trex-draw.mind",
+      imageTargetSrc: "../../../../musicband.mind",
     });
     const { renderer, scene, camera } = mindarThree;
+
     const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
     scene.add(light);
 
-    // create anchor
-    const anchor = mindarThree.addAnchor(0);
+    const raccoon = await loadGLTF(
+      "./Dinosaurs-3d-models/Ankylosaurus/scene.gltf"
+    );
+    raccoon.scene.scale.set(0.1, 0.1, 0.1);
+    raccoon.scene.position.set(0, -0.4, 0);
 
-    const gltf = await loadGLTF("./velociraptor/scene.gltf");
-    gltf.scene.scale.set(1, 1, 1);
-    // gltf.scene.position.set(0, -0.4, 0);
-    anchor.group.add(gltf.scene);
+    const bear = await loadGLTF(
+      "./applications-20230306/applications/assets/models/musicband-bear/scene.gltf"
+    );
+    bear.scene.scale.set(0.1, 0.1, 0.1);
+    bear.scene.position.set(0, -0.4, 0);
 
-    const mixer = new THREE.AnimationMixer(gltf.scene);
-    const action = mixer.clipAction(gltf.animations[0]);
-    action.play();
+    const raccoonAnchor = mindarThree.addAnchor(0);
+    raccoonAnchor.group.add(raccoon.scene);
 
-    const clock = new THREE.Clock();
+    const bearAnchor = mindarThree.addAnchor(1);
+    bearAnchor.group.add(bear.scene);
 
-    // start AR
     await mindarThree.start();
     renderer.setAnimationLoop(() => {
-      const delta = clock.getDelta();
-      mixer.update(delta);
       renderer.render(scene, camera);
     });
   };

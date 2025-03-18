@@ -1,28 +1,15 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
-          "mindar-image-three": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"
-        }
-      }
-    </script>
+    <script src="./libs/mindar/mindar-image-three.prod.js"></script>
     <script src="./main.js" type="module"></script>
-    <style>
-      #my-ar-container {
-        height: 300px;
-        width: 300px;
-        position: relative;
-        overflow: hidden;
-      }
-    </style>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <h1>My AR website</h1>
+    <h1>My WebAR webpage</h1>
+
     <div id="my-ar-container"></div>
-    <p>It's very cool</p>
+
+    <p>It's very cool!</p>
   </body>
 </html>
