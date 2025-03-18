@@ -3,13 +3,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="./libs/mindar/mindar-image-three.prod.js"></script>
     <script src="./main.js" type="module"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./style.css" />
+    <style>
+      .dinosaur-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .dinosaur-item img {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 8px;
+      }
+      .launch-ar-btn {
+        margin-top: 8px;
+        padding: 12px 24px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .launch-ar-btn:hover {
+        background-color: #45a049;
+      }
+      .ar-view-btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .ar-view-btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
   </head>
-  <body>
-    <h1>My WebAR webpage</h1>
+  <body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-4">
+      <h1 class="text-3xl font-bold mb-4">AR Dinosaur Museum</h1>
+      <div class="dinosaur-list">
+        <script>
+          const dinosaurs = [
+            { name: "Ankylosaurus", img: "Ankylosaurus.png" },
+            { name: "Brachiosaurus", img: "Brachiosaurus.png" },
+            { name: "Tyrannosaurus-Rex", img: "Tyrannosaurus-Rex.png" },
+            { name: "Triceratops", img: "Triceratops.png" },
+            { name: "Stegosaurus", img: "Stegosaurus.png" },
+            { name: "Spinosaurus", img: "Spinosaurus.png" },
+            { name: "Parasaurolophus", img: "Parasaurolophus.png" },
+            { name: "Gallimimus", img: "Gallimimus.png" },
+            { name: "Pachycephalosaurus", img: "pachycephalosaurus.png" },
+            { name: "Pteranodon", img: "Pteranodon.png" },
+          ];
 
-    <div id="my-ar-container"></div>
-
-    <p>It's very cool!</p>
+          dinosaurs.forEach(dino => {
+            document.write(`
+              <div class="dinosaur-item">
+                <img src="./Dinosaurs-images/${dino.img}" alt="${dino.name}" />
+                <h2 class="text-xl font-semibold">${dino.name}</h2>
+                <button class="launch-ar-btn" id="launch-${dino.name.toLowerCase()}-btn">
+                  View in AR
+                </button>
+              </div>
+            `);
+          });
+        </script>
+      </div>
+    </div>
   </body>
 </html>
